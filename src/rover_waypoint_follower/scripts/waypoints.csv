@@ -1,0 +1,8 @@
+# Waypoints for the four-wheeled robot (x, y in metres, theta optional)
+# 0,0 is the centre of the workspace.
+# The rover will visit each in order and then stop.
+0.0, 0.0, 0.0
+1.0, 0.0, 0.0
+1.0, 1.0, 0.0
+0.0, 1.0, 0.0
+-0.5, -0.5, 0.0
