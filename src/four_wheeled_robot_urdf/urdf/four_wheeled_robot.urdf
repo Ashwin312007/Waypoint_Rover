@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<!--
+  Monolithic URDF for 4-wheeled mobile robot.
+  Dimensions:
+    Chassis: L = 260 mm (0.260 m), B = 156 mm (0.156 m), H = 80 mm (0.080 m)
+    Wheels: Diameter = 128 mm (Radius = 0.064 m), Thickness = 35 mm (0.035 m)
+    Wheelbase: 150 mm (x = +-0.075 m)
+    Track: 210 mm (y = +-0.105 m)
+    Ground clearance: 44 mm (wheels touch z = 0 at base_footprint)
+-->
+<robot name="four_wheeled_robot">
+
+  <!-- ==================================================================
+       MATERIALS
+       ================================================================== -->
+  <material name="blue">
+    <color rgba="0.1 0.35 0.85 1.0"/>
+  </material>
+
+  <material name="black">
+    <color rgba="0.1 0.1 0.1 1.0"/>
+  </material>
+
+  <!-- ==================================================================
+       LINKS
+       ================================================================== -->
+
+  <!-- Base Footprint: ground projection plane (z = 0) -->
+  <link name="base_footprint"/>
+
+  <!-- Base Link (Chassis): 0.260 x 0.156 x 0.080 m, 2.0 kg -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.260 0.156 0.080"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.260 0.156 0.080"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="2.0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.00512" ixy="0.0" ixz="0.0" 
+               iyy="0.01233" iyz="0.0" 
+               izz="0.01532"/>
+    </inertial>
+  </link>
+
+  <!-- Front Left Wheel Link (radius 0.064 m, width 0.035 m) -->
+  <link name="front_left_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707963267948966 0 0"/>
+      <geometry>
+        <cylinder radius="0.064" length="0.035"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5707963267948966 0 0"/>
+      <geometry>
+        <cylinder radius="0.064" length="0.035"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.25"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.000281" ixy="0.0" ixz="0.0" 
+               iyy="0.000512" iyz="0.0" 
+               izz="0.000281"/>
+    </inertial>
+  </link>
+
+  <!-- Front Right Wheel Link -->
+  <link name="front_right_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707963267948966 0 0"/>
+      <geometry>
+        <cylinder radius="0.064" length="0.035"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5707963267948966 0 0"/>
+      <geometry>
+        <cylinder radius="0.064" length="0.035"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.25"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.000281" ixy="0.0" ixz="0.0" 
+               iyy="0.000512" iyz="0.0" 
+               izz="0.000281"/>
+    </inertial>
+  </link>
+
+  <!-- Rear Left Wheel Link -->
+  <link name="rear_left_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707963267948966 0 0"/>
+      <geometry>
+        <cylinder radius="0.064" length="0.035"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5707963267948966 0 0"/>
+      <geometry>
+        <cylinder radius="0.064" length="0.035"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.25"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.000281" ixy="0.0" ixz="0.0" 
+               iyy="0.000512" iyz="0.0" 
+               izz="0.000281"/>
+    </inertial>
+  </link>
+
+  <!-- Rear Right Wheel Link -->
+  <link name="rear_right_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707963267948966 0 0"/>
+      <geometry>
+        <cylinder radius="0.064" length="0.035"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5707963267948966 0 0"/>
+      <geometry>
+        <cylinder radius="0.064" length="0.035"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.25"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.000281" ixy="0.0" ixz="0.0" 
+               iyy="0.000512" iyz="0.0" 
+               izz="0.000281"/>
+    </inertial>
+  </link>
+
+  <!-- ==================================================================
+       JOINTS
+       ================================================================== -->
+
+  <!-- Base Footprint Joint: Chassis lifted by 0.084 m so wheel ground contact is at z = 0 -->
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0.084" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Front Left Wheel Joint -->
+  <joint name="front_left_wheel_joint" type="continuous">
+    <origin xyz="0.075 0.105 -0.020" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="front_left_wheel_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="10.0" velocity="20.0"/>
+  </joint>
+
+  <!-- Front Right Wheel Joint -->
+  <joint name="front_right_wheel_joint" type="continuous">
+    <origin xyz="0.075 -0.105 -0.020" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="front_right_wheel_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="10.0" velocity="20.0"/>
+  </joint>
+
+  <!-- Rear Left Wheel Joint -->
+  <joint name="rear_left_wheel_joint" type="continuous">
+    <origin xyz="-0.075 0.105 -0.020" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="rear_left_wheel_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="10.0" velocity="20.0"/>
+  </joint>
+
+  <!-- Rear Right Wheel Joint -->
+  <joint name="rear_right_wheel_joint" type="continuous">
+    <origin xyz="-0.075 -0.105 -0.020" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="rear_right_wheel_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="10.0" velocity="20.0"/>
+  </joint>
+
+</robot>

@@ -10,8 +10,8 @@ Visualization Manager:
       Name: Grid
       Enabled: true
       Plane: XY
-      Reference Frame: base_footprint
-      Cell Size: 1.0
+      Reference Frame: odom
+      Cell Size: 0.5
       Total Cell Count: 20
     - Class: rviz_default_plugins/RobotModel
       Name: RobotModel
@@ -27,12 +27,33 @@ Visualization Manager:
     - Class: rviz_default_plugins/TF
       Name: TF
       Enabled: true
-      Show Names: true
+      Show Names: false
       Show Axes: true
       Update Interval: 0.0
+    - Class: rviz_default_plugins/Path
+      Name: Rover Path
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /rover_path
+      Color: 255; 215; 0
+      Line Style: Lines
+      Line Width: 0.03
+    - Class: rviz_default_plugins/MarkerArray
+      Name: Waypoint Markers
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /waypoint_markers
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: base_footprint
+    Fixed Frame: odom
   Tools:
     - Class: rviz_default_plugins/Interact
     - Class: rviz_default_plugins/MoveCamera
@@ -42,6 +63,6 @@ Visualization Manager:
     Current:
       Class: rviz_default_plugins/Orbit
       Name: Current View
-      Distance: 3.0
-      Pitch: 0.5
-      Yaw: 0.5
+      Distance: 6.5
+      Pitch: 0.85
+      Yaw: 0.8

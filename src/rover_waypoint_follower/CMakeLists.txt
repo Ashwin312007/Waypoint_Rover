@@ -11,4 +11,11 @@ install(
   DESTINATION share/${PROJECT_NAME}
 )
 
+# Install Python executable
+install(
+  PROGRAMS scripts/waypoint_follower_node.py
+  DESTINATION lib/${PROJECT_NAME}
+  RENAME waypoint_follower_node
+)
+
 ament_package()

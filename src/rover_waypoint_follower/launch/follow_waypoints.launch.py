@@ -15,6 +15,7 @@ import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
+from launch.conditions import IfCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
@@ -27,6 +28,11 @@ def generate_launch_description():
         robot_desc = infp.read()
 
     # ---- Launch arguments -------------------------------------------------
+    declare_use_rviz_arg = DeclareLaunchArgument(
+        'use_rviz',
+        default_value='true',
+        description='Whether to start RViz2'
+    )
     declare_waypoints_arg = DeclareLaunchArgument(
         'waypoints_csv',
         default_value=os.path.join(
@@ -44,6 +50,14 @@ def generate_launch_description():
         description='Path to boundary CSV file (format: x_min,x_max,y_min,y_max)'
     )
 
+    # ---- Joint state publisher -------------------------------------------
+    joint_state_publisher_node = Node(
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
+        name='joint_state_publisher',
+        output='screen'
+    )
+
     # ---- Robot state publisher -------------------------------------------
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
@@ -59,9 +73,10 @@ def generate_launch_description():
         executable='rviz2',
         name='rviz2',
         output='screen',
+        condition=IfCondition(LaunchConfiguration('use_rviz')),
         arguments=['-d',
                    os.path.join(
-                       get_package_share_directory('rover_waypoint_follower'),
+                       four_wheeled_pkg,
                        'rviz', 'view_robot.rviz'
                    )]
     )
@@ -79,8 +94,10 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
+        declare_use_rviz_arg,
         declare_waypoints_arg,
         declare_boundary_arg,
+        joint_state_publisher_node,
         robot_state_publisher_node,
         rviz_node,
         wp_node,
